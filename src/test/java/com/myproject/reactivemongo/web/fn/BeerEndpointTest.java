@@ -2,7 +2,6 @@ package com.myproject.reactivemongo.web.fn;
 
 import com.myproject.reactivemongo.domain.Beer;
 import com.myproject.reactivemongo.model.BeerDTO;
-import com.myproject.reactivemongo.services.BeerServiceImpl;
 import com.myproject.reactivemongo.services.BeerServiceImplTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -19,8 +17,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 @AutoConfigureWebTestClient
@@ -113,11 +111,13 @@ class BeerEndpointTest {
     @Test
     @Order(6)
     void testPatchIdFound() {
+
         BeerDTO beerDTO = getSavedTestBeer();
+        BeerDTO testBeer = BeerDTO.builder().beerName("Papieżowe").build();
 
         webTestClient.patch()
                 .uri(BeerRouterConfig.BEER_PATH_ID, beerDTO.getId())
-                .body(Mono.just(beerDTO), BeerDTO.class)
+                .body(Mono.just(testBeer), BeerDTO.class)
                 .exchange()
                 .expectStatus().isNoContent();
     }

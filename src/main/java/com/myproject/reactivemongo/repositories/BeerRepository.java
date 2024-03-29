@@ -10,5 +10,5 @@ import reactor.core.publisher.Mono;
 public interface BeerRepository extends ReactiveMongoRepository<Beer, String> {
 
     Mono<Beer> findFirstByBeerName(String beerName);
-    Flux<Beer> findFirstByBeerStyle(String beerStyle);
+    Flux<Beer> findByBeerStyle(String beerStyle);
 }

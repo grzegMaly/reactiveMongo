@@ -6,5 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface CustomerRepository extends ReactiveMongoRepository<Customer, String> {
 
-    Flux<Customer> findFirstByCustomerName(String customerName);
+    Flux<Customer> findByCustomerName(String customerName);
 }

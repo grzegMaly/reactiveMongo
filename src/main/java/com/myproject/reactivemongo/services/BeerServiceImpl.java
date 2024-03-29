@@ -1,6 +1,5 @@
 package com.myproject.reactivemongo.services;
 
-import com.myproject.reactivemongo.domain.Beer;
 import com.myproject.reactivemongo.mappers.BeerMapper;
 import com.myproject.reactivemongo.model.BeerDTO;
 import com.myproject.reactivemongo.repositories.BeerRepository;
@@ -37,9 +36,9 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public Flux<BeerDTO> findFirstByBeerStyle(String beerStyle) {
+    public Flux<BeerDTO> findByBeerStyle(String beerStyle) {
 
-        return beerRepository.findFirstByBeerStyle(beerStyle)
+        return beerRepository.findByBeerStyle(beerStyle)
                 .map(beerMapper::beerToBeerDto);
     }
 

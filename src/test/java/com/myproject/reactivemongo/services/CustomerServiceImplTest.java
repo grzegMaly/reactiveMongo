@@ -40,7 +40,7 @@ public class CustomerServiceImplTest {
         CustomerDTO savedDto = getSavedCustomerDto();
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-        Flux<CustomerDTO> foundDto = customerService.findFirstByCustomerName(savedDto.getCustomerName());
+        Flux<CustomerDTO> foundDto = customerService.findByCustomerName(savedDto.getCustomerName());
 
         foundDto.subscribe(dto -> {
             System.out.println(dto.toString());

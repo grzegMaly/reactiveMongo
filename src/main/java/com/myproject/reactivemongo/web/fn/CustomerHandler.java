@@ -69,7 +69,7 @@ public class CustomerHandler {
         Flux<CustomerDTO> flux;
 
         if (request.queryParam("customerName").isPresent()) {
-            flux = customerService.findFirstByCustomerName(request.queryParam("customerName").get());
+            flux = customerService.findByCustomerName(request.queryParam("customerName").get());
         } else {
             flux = customerService.listCustomers();
         }
@@ -117,10 +117,8 @@ public class CustomerHandler {
     public Mono<ServerResponse> patchCustomerById(ServerRequest request) {
 
         return request.bodyToMono(CustomerDTO.class)
-                .flatMap(customerDTO -> Mono.defer(() -> {
-                    validate(customerDTO);
-                    return customerService.patchCustomer(request.pathVariable("customerId"), customerDTO);
-                }))
+                .flatMap(customerDTO ->
+                        customerService.patchCustomer(request.pathVariable("customerId"), customerDTO))
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
                 .flatMap(savedDto -> ServerResponse.noContent().build())
                 .onErrorResume(ResponseStatusException.class, handleResponseStatusException);

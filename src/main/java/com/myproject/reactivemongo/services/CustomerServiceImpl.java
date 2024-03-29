@@ -29,8 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Flux<CustomerDTO> findFirstByCustomerName(String customerName) {
-        return customerRepository.findFirstByCustomerName(customerName)
+    public Flux<CustomerDTO> findByCustomerName(String customerName) {
+        return customerRepository.findByCustomerName(customerName)
                 .map(customerMapper::customerToCustomerDto);
     }
 

@@ -59,7 +59,7 @@ public class BeerServiceImplTest {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         System.out.println(savedDto.toString());
 
-        Flux<BeerDTO> foundDto = beerService.findFirstByBeerStyle(savedDto.getBeerStyle());
+        Flux<BeerDTO> foundDto = beerService.findByBeerStyle(savedDto.getBeerStyle());
 
         foundDto.subscribe(dto -> {
             System.out.println(dto.toString());

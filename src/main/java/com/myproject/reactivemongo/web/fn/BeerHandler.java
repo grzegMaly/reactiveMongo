@@ -67,7 +67,7 @@ public class BeerHandler {
         Flux<BeerDTO> flux;
 
         if (request.queryParam("beerStyle").isPresent()) {
-            flux = beerService.findFirstByBeerStyle(request.queryParam("beerStyle").get());
+            flux = beerService.findByBeerStyle(request.queryParam("beerStyle").get());
         } else {
             flux = beerService.listBeers();
         }
@@ -115,13 +115,9 @@ public class BeerHandler {
 
     public Mono<ServerResponse> patchBeerById(ServerRequest request) {
         return request.bodyToMono(BeerDTO.class)
-                .flatMap(beerDTO -> Mono.defer(() -> {
-                    validate(beerDTO);
-                    return beerService.updateBeer(request.pathVariable("beerId"), beerDTO);
-                }))
+                .flatMap(beerDTO -> beerService.patchBeer(request.pathVariable("beerId"), beerDTO))
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
-                .flatMap(updatedDto -> ServerResponse.noContent().build())
-                .onErrorResume(ResponseStatusException.class, handleResponseStatusException);
+                .flatMap(updatedDto -> ServerResponse.noContent().build());
     }
 
     public Mono<ServerResponse> deleteBeerById(ServerRequest request) {
