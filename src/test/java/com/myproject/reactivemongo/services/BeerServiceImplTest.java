@@ -18,10 +18,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class BeerServiceImplTest {
+public class BeerServiceImplTest {
 
     @Autowired
     BeerService beerService;
@@ -111,7 +110,7 @@ class BeerServiceImplTest {
         BeerDTO savedBeerDto = getSavedBeerDto();
         savedBeerDto.setBeerName(newName);
 
-        BeerDTO updatedDto = beerService.saveBeer(Mono.just(savedBeerDto)).block();
+        BeerDTO updatedDto = beerService.updateBeer(savedBeerDto.getId(), savedBeerDto).block();
 
         BeerDTO fetchedDto = beerService.getById(updatedDto.getId()).block();
         assertThat(fetchedDto.getBeerName()).isEqualTo(newName);

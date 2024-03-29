@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -26,8 +26,8 @@ public class Customer {
     private String customerName;
 
     @CreatedDate
-    private LocalDateTime createdDate;
+    private Instant createdDate;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private Instant lastModifiedDate;
 }
